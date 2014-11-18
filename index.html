@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Sirtet</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <style type="text/css">
+    body { background-color: lightblue; }
+    #sirtet {
+      position: absolute; width: 160px; height: 384px;
+      background-color: white;
+    }
+    .box {
+      position: absolute; width: 16px; height: 16px;
+      display: none;
+      background-color: red;
+    }
+    .grey {
+      background-color: grey;
+    }
+  </style>
+</head>
+<body>
+  <div id="sirtet"></div>
+  <script>
+    var Sirtet = {
+      WIDTH: 10,
+      HEIGHT: 24,
+      BOX: 16,
+
+      interval: null,
+      boxes: [],
+      piece: null,
+      div: null,
+      map: [],
+
+      init: function() {
+        this.div = document.getElementById('sirtet');
+        for (var x = 0; x < 10; x++) {
+          this.map[x] = [];
+          for (var y = 0; y < 24; y++) {
+            this.map[x][y] = null;
+          }
+        }
+        for (var i = 0; i < 4; i++) {
+          this.boxes[i] = document.createElement('div');
+          this.boxes[i].className = 'box';
+          this.div.appendChild(this.boxes[i]);
+        }
+      },
+
+      play: function() {
+        this.interval = setInterval((function(that) { return function() { return that.loop(); }; })(this), 500);
+      },
+
+      loop: function() {
+        if (this.piece === null) {
+          this.piece = this.newPiece();
+        }
+        this.bajar();
+        this.draw();
+      },
+
+      newPiece: function() {
+        return {
+          m: [[1, 1], [1, 1]],
+          w: 2,
+          h: 2,
+          x: 0,
+          y: 0
+        };
+      },
+
+      bajar: function() {
+        this.piece.y++;
+        if (this.piece.y + this.piece.h == this.HEIGHT) {
+          this.plasmar();
+          this.piece = null;
+        }
+      },
+
+      plasmar: function() {
+        var n = 0;
+        for (var x = 0; x < this.piece.w; x++) {
+          for (var y = 0; y < this.piece.h; y++) {
+            if (this.piece.m[x][y] == 1) {
+              this.boxes[n].style.left = ((this.piece.x + x) * this.BOX) + 'px';
+              this.boxes[n].style.top = ((this.piece.y + y) * this.BOX) + 'px';
+              this.boxes[n].style.display = 'block';
+              this.boxes[n].className = 'box grey';
+
+              this.map[this.piece.x + x][this.piece.y + y] = this.boxes[n];
+
+              this.boxes[n] = document.createElement('div');
+              this.boxes[n].className = 'box';
+              this.div.appendChild(this.boxes[n]);
+
+              n++;
+            }
+          }
+        }
+      },
+
+      draw: function() {
+        //this.drawMap();
+        this.drawPiece();
+      },
+
+      drawPiece: function() {
+        if (this.piece === null) {
+          return;
+        }
+        var n = 0;
+        for (var x = 0; x < this.piece.w; x++) {
+          for (var y = 0; y < this.piece.h; y++) {
+            if (this.piece.m[x][y] == 1) {
+              this.boxes[n].style.left = ((this.piece.x + x) * this.BOX) + 'px';
+              this.boxes[n].style.top = ((this.piece.y + y) * this.BOX) + 'px';
+              this.boxes[n].style.display = 'block';
+              n++;
+            }
+          }
+        }
+      }
+    };
+    Sirtet.init();
+    Sirtet.play();
+  </script>
+</body>
+</html>
