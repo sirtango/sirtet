@@ -46,6 +46,17 @@
           this.boxes[i].className = 'box';
           this.div.appendChild(this.boxes[i]);
         }
+        this._addEvent(document, "keydown", function(event) {
+          var key = event.keyCode || event.which;
+          switch (key) {
+            case 32: // space
+              break;
+            case 37: // left
+              break;
+            case 39: // right
+              break;
+          }
+        });
       },
 
       play: function() {
@@ -135,6 +146,16 @@
               n++;
             }
           }
+        }
+      },
+
+      _addEvent: function(obj, type, fn) {
+        if (obj.addEventListener) {
+          obj.addEventListener(type, fn, false);
+        } else {
+          obj.attachEvent("on" + type, function() {
+            fn.call(obj, window.event);
+          });
         }
       }
     };
