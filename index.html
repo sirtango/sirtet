@@ -150,11 +150,14 @@
       },
 
       _addEvent: function(obj, type, fn) {
+        var that = this; // hack
         if (obj.addEventListener) {
-          obj.addEventListener(type, fn, false);
+          obj.addEventListener(type, function(e) {
+            fn.call(that, e);
+          }, false);
         } else {
           obj.attachEvent("on" + type, function() {
-            fn.call(obj, window.event);
+            fn.call(that, window.event);
           });
         }
       }
