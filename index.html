@@ -74,7 +74,7 @@
         for (var x = 0; x < piece.w; x++) {
           for (var y = 0; y < piece.h; y++) {
             if (piece.m[x][y] == 1 && this.map[piece.x + x][piece.y + y + 1] != null) {
-              return true;            
+              return true;
             }
           }
         }
@@ -89,7 +89,7 @@
 
         this.piece.y++;
         if (this.piece.y + this.piece.h == this.HEIGHT) {
-          this.plasmar();      
+          this.plasmar();
         }
       },
 
