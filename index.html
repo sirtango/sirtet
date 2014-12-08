@@ -46,10 +46,12 @@
           this.boxes[i].className = 'box';
           this.div.appendChild(this.boxes[i]);
         }
+		
         this._addEvent(document, "keydown", function(event) {
           var key = event.keyCode || event.which;
           switch (key) {
             case 32: // space
+			  this.rotar(this.piece);
               break;
             case 37: // left
               break;
@@ -73,7 +75,7 @@
 
       newPiece: function() {
         return {
-          m: [[1, 1], [1, 1]],
+          m: [[1, 1], [0, 1]],
           w: 2,
           h: 2,
           x: 0,
@@ -91,7 +93,29 @@
         }
         return false;
       },
-
+	  
+	  rotar: function(piece) {
+		if(piece != null){
+			var newHeight = piece.w;
+			var newWidth = piece.h;
+			var newMap = new Array(newWidth);
+			for(var k=0;k < newWidth; k++){
+				newMap[k] = new Array(newHeight);
+			}
+			for(var x=0; x < piece.w; x++){
+				for(var y=0; y < piece.h; y++){
+					newMap[newWidth-1-y][x] = piece.m[x][y];
+				}
+			}
+			piece.m = newMap;
+			piece.h = newHeight;
+			piece.w = newWidth;
+			
+			return true;
+		}
+		return false;
+	  },
+	  
       bajar: function() {
         if (this.colisiona(this.piece)) {
           this.plasmar();
