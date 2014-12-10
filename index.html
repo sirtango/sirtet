@@ -46,6 +46,19 @@
           this.boxes[i].className = 'box';
           this.div.appendChild(this.boxes[i]);
         }
+
+        this._addEvent(document, "keydown", function(event) {
+          var key = event.keyCode || event.which;
+          switch (key) {
+            case 32: // space
+              this.rotar(this.piece);
+              break;
+            case 37: // left
+              break;
+            case 39: // right
+              break;
+          }
+        });
       },
 
       play: function() {
@@ -77,6 +90,35 @@
               return true;
             }
           }
+        }
+        return false;
+      },
+
+      rotar: function(piece) {
+        if (piece != null) {
+          var newHeight = piece.w;
+          var newWidth = piece.h;
+
+          if (this.WIDTH <= piece.x + newWidth) {
+            return false;
+          }
+
+          var newMap = new Array(newWidth);
+          for (var k = 0;k < newWidth; k++) {
+            newMap[k] = new Array(newHeight);
+          }
+
+          for (var x = 0; x < piece.w; x++) {
+            for (var y = 0; y < piece.h; y++) {
+              newMap[newWidth-1-y][x] = piece.m[x][y];
+            }
+          }
+
+          piece.m = newMap;
+          piece.h = newHeight;
+          piece.w = newWidth;
+
+          return true;
         }
         return false;
       },
@@ -135,6 +177,19 @@
               n++;
             }
           }
+        }
+      },
+
+      _addEvent: function(obj, type, fn) {
+        var that = this; // hack
+        if (obj.addEventListener) {
+          obj.addEventListener(type, function(e) {
+            fn.call(that, e);
+          }, false);
+        } else {
+          obj.attachEvent("on" + type, function() {
+            fn.call(that, window.event);
+          });
         }
       }
     };
