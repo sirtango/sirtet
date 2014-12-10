@@ -100,12 +100,12 @@
 			var newWidth = piece.h;
 			var newMap = new Array(newWidth);
 			for(var k=0;k < newWidth; k++){
-				newMap[k] = new Array(newHeight);
+			  newMap[k] = new Array(newHeight);
 			}
 			for(var x=0; x < piece.w; x++){
-				for(var y=0; y < piece.h; y++){
-					newMap[newWidth-1-y][x] = piece.m[x][y];
-				}
+			  for(var y=0; y < piece.h; y++){
+		        newMap[newWidth-1-y][x] = piece.m[x][y];
+			  }
 			}
 			piece.m = newMap;
 			piece.h = newHeight;
