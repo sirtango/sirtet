@@ -46,7 +46,7 @@
           this.boxes[i].className = 'box';
           this.div.appendChild(this.boxes[i]);
         }
-		
+
         this._addEvent(document, "keydown", function(event) {
           var key = event.keyCode || event.which;
           switch (key) {
@@ -75,10 +75,10 @@
 
       newPiece: function() {
         return {
-          m: [[1, 1, 1], [0, 1, 0]],
+          m: [[1, 1], [1, 1]],
           w: 2,
-          h: 3,
-          x: 5,
+          h: 2,
+          x: 0,
           y: 0
         };
       },
@@ -95,21 +95,21 @@
       },
 
       rotar: function(piece) {
-        if (piece != null){
+        if (piece != null) {
           var newHeight = piece.w;
           var newWidth = piece.h;
 
-          if (this.WIDTH <= piece.x + newWidth){
+          if (this.WIDTH <= piece.x + newWidth) {
             return false;
           }
 
           var newMap = new Array(newWidth);
-          for (var k = 0;k < newWidth; k++){
+          for (var k = 0;k < newWidth; k++) {
             newMap[k] = new Array(newHeight);
           }
 
-          for (var x = 0; x < piece.w; x++){
-            for (var y = 0; y < piece.h; y++){
+          for (var x = 0; x < piece.w; x++) {
+            for (var y = 0; y < piece.h; y++) {
               newMap[newWidth-1-y][x] = piece.m[x][y];
             }
           }
@@ -131,7 +131,7 @@
 
         this.piece.y++;
         if (this.piece.y + this.piece.h == this.HEIGHT) {
-          this.plasmar();      
+          this.plasmar();
         }
       },
 
