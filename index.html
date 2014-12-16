@@ -87,8 +87,10 @@
               this.rotar(this.piece);
               break;
             case 37: // left
+              this.moverL(this.piece);
               break;
             case 39: // right
+              this.moverR(this.piece);
               break;
           }
         });
@@ -153,6 +155,14 @@
         }
 
         return false;
+      },
+
+      moverR: function(piece) {
+        piece.x ++;
+      },
+
+      moverL: function(piece) {
+        piece.x --;
       },
 
       bajar: function() {
