@@ -97,7 +97,7 @@
       },
 
       play: function() {
-        this.interval = setInterval((function(that) { return function() { return that.loop(); }; })(this), 100);
+        this.interval = setInterval((function(that) { return function() { return that.loop(); }; })(this), 400);
       },
 
       loop: function() {
@@ -158,11 +158,15 @@
       },
 
       moverR: function(piece) {
-        piece.x ++;
+        if (piece.x + piece.w <= 9){
+          piece.x ++;
+        }
       },
 
       moverL: function(piece) {
-        piece.x --;
+        if (piece.x > 0){
+          piece.x --;
+        }
       },
 
       bajar: function() {
