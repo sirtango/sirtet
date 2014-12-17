@@ -90,15 +90,17 @@
               this.rotar(this.piece);
               break;
             case 37: // left
+              this.moverL(this.piece);
               break;
             case 39: // right
+              this.moverR(this.piece);
               break;
           }
         });
       },
 
       play: function() {
-        this.interval = setInterval((function(that) { return function() { return that.loop(); }; })(this), 100);
+        this.interval = setInterval((function(that) { return function() { return that.loop(); }; })(this), 400);
       },
 
       loop: function() {
@@ -156,6 +158,18 @@
         }
 
         return false;
+      },
+
+      moverR: function(piece) {
+        if (piece.x + piece.w <= this.WIDTH-1) {
+          piece.x++;
+        }
+      },
+
+      moverL: function(piece) {
+        if (piece.x > 0) {
+          piece.x--;
+        }
       },
 
       drop: function() {
