@@ -84,6 +84,9 @@
           var key = event.keyCode || event.which;
           switch (key) {
             case 32: // space
+              this.drop();
+              break;
+            case 38: // up
               this.rotar(this.piece);
               break;
             case 37: // left
@@ -166,6 +169,12 @@
       moverL: function(piece) {
         if (piece.x > 0) {
           piece.x--;
+        }
+      },
+
+      drop: function() {
+        while (this.piece !== null) {
+          this.bajar();
         }
       },
 
