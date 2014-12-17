@@ -158,14 +158,14 @@
       },
 
       moverR: function(piece) {
-        if (piece.x + piece.w <= 9){
-          piece.x ++;
+        if (piece.x + piece.w <= this.WIDTH-1) {
+          piece.x++;
         }
       },
 
       moverL: function(piece) {
-        if (piece.x > 0){
-          piece.x --;
+        if (piece.x > 0) {
+          piece.x--;
         }
       },
 
