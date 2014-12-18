@@ -119,10 +119,10 @@
         return piece;
       },
 
-      colisiona: function(piece) {
+      colisiona: function(piece, ox, oy) {
         for (var x = 0; x < piece.w; x++) {
           for (var y = 0; y < piece.h; y++) {
-            if (piece.m[x][y] == 1 && this.map[piece.x + x][piece.y + y + 1] != null) {
+            if (piece.m[x][y] == 1 && this.map[piece.x + x + ox][piece.y + y + oy] != null) {
               return true;
             }
           }
@@ -179,7 +179,7 @@
       },
 
       bajar: function() {
-        if (this.colisiona(this.piece)) {
+        if (this.colisiona(this.piece, 0, 1)) {
           this.plasmar();
           return;
         }
