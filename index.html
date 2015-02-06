@@ -106,6 +106,9 @@
       loop: function() {
         if (this.piece === null) {
           this.piece = this.newPiece();
+          if (this.colisiona(this.piece, 0, 0)) {
+            this.derrota();
+          }
         }
         this.bajar();
         this.draw();
@@ -135,7 +138,8 @@
           var newHeight = piece.w;
           var newWidth = piece.h;
 
-          if (this.WIDTH <= piece.x + newWidth) {
+          if (this.WIDTH < piece.x + newWidth) {
+            this.moverL(this.piece);
             return false;
           }
 
@@ -146,15 +150,39 @@
 
           for (var x = 0; x < piece.w; x++) {
             for (var y = 0; y < piece.h; y++) {
-              newMap[newWidth-1-y][x] = piece.m[x][y];
+              newMap[newWidth - 1 - y][x] = piece.m[x][y];
             }
           }
-
-          piece.m = newMap;
-          piece.h = newHeight;
           piece.w = newWidth;
+          piece.h = newHeight;
+          piece.m = newMap;
+          
+          if (this.colisiona(this.piece, 0, 0)) {
 
-          return true;
+            newHeight = piece.w;
+            newWidth = piece.h;
+            
+            newMap = new Array(newWidth);
+            for (var k = 0;k < newWidth; k++) {
+              newMap[k] = new Array(newHeight);
+            }
+            
+            for (var x = 0; x < piece.w; x++) {
+              for (var y = 0; y < piece.h; y++) {
+                newMap[y][newHeight - 1 - x] = piece.m[x][y];
+              }
+            }
+            
+            piece.w = newWidth;
+            piece.h = newHeight;
+            piece.m = newMap;
+
+            return false;
+          }
+          else {
+            return true;
+          }
+          
         }
 
         return false;
@@ -211,6 +239,10 @@
           }
         }
         this.piece = null;
+      },
+
+      derrota: function() {
+        alert("Game Over!");
       },
 
       draw: function() {
